@@ -17,6 +17,7 @@ export default function Navbar() {
             zIndex: 100,
             overflow: 'visible',
         }}>
+            <Link href="/" className="logo">DrivePass</Link>
             <Link href="/" className="nav-link">Home</Link>
             <Link href="/partners" className="nav-link">Partners</Link>
             <Link href="/sign-up" className="nav-link">Sign up</Link>

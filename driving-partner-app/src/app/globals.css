@@ -26,7 +26,7 @@ body {
 }
 
 .nav-link {
-  color: #111111;
+  color: #343333;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -53,7 +53,7 @@ body {
 }
 
 .nav-link:hover {
-  color: #141414a5;
+  color: #141414;
 }
 
 /* on hover, scale it up into view */
@@ -77,4 +77,11 @@ body {
 
 .sign-in-btn:hover {
   background-color: #141414;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #343333;
+  text-decoration: none;
 }

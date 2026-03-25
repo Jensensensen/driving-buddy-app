@@ -14,6 +14,7 @@ export default function PartnersPage() {
                         <p className="text-gray-600">5 years of experience | 4.9 stars (120 reviews)</p>
                         <p className="mt-2">Available for sessions on weekdays and weekends. Located in Sydney CBD.</p>
                         <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">View Profile</button>
+                        temp
                     </div>
                     {/* More partner cards would go here */}
                 </div>

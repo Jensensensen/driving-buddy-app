@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import '../globals.css'
 
 export default function Navbar() {
     return (
@@ -14,26 +15,12 @@ export default function Navbar() {
             position: 'sticky',
             top: 0,
             zIndex: 100,
+            overflow: 'visible',
         }}>
-            <Link href="/" style={linkStyle}>Home</Link>
-            <Link href="/partners" style={linkStyle}>Partners</Link>
-            <Link href="/sign-up" style={linkStyle}>Sign up</Link>
-            <Link href="/sign-in" style={{
-                ...linkStyle,
-                backgroundColor: '#111',
-                color: '#fff',
-                padding: '8px 18px',
-                borderRadius: '6px',
-                marginLeft: 'auto',
-            }}>Sign in</Link>
+            <Link href="/" className="nav-link">Home</Link>
+            <Link href="/partners" className="nav-link">Partners</Link>
+            <Link href="/sign-up" className="nav-link">Sign up</Link>
+            <Link href="/sign-in" className="sign-in-btn">Sign in</Link>
         </nav>
     )
-}
-
-const linkStyle: React.CSSProperties = {
-    color: '#111111',
-    textDecoration: 'none',
-    fontSize: '0.9rem',
-    fontWeight: 500,
-    letterSpacing: '0.01em',
 }

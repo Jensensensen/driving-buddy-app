@@ -20,7 +20,7 @@ export default function Navbar() {
             <Link href="/" className="logo">DrivePass</Link>
             <Link href="/become-a-partner" className="nav-link">Become a Partner</Link>
             <Link href="/partners" className="nav-link">Browse Partners</Link>
-            <Link href="/partners" className="nav-link">FAQs</Link>
+            <Link href="/FAQs" className="nav-link">FAQs</Link>
             <Link href="/sign-up" className="nav-link">Sign up</Link>
             <Link href="/sign-in" className="sign-in-btn">Sign in</Link>
         </nav>

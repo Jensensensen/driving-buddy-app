@@ -16,7 +16,6 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../../components/AppTheme';
-import ColorModeSelect from '../../components/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../../components/CustomIcons';
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -123,7 +122,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <SitemarkIcon />

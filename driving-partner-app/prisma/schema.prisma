@@ -13,3 +13,79 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(LEARNER)
+  createdAt DateTime @default(now())
+
+  listings Listing[]
+  bookings Booking[]
+  reviews  Review[]
+}
+
+enum Role {
+  LEARNER
+  BUDDY
+  INSTRUCTOR
+}
+
+model Listing {
+  id           String   @id @default(cuid())
+  userId       String
+  title        String
+  description  String
+  pricePerHour Float?
+  suburb       String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  user     User      @relation(fields: [userId], references: [id])
+  bookings Booking[]
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  learnerId   String
+  listingId   String
+  scheduledAt DateTime
+  status      BookingStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+
+  learner User     @relation(fields: [learnerId], references: [id])
+  listing Listing  @relation(fields: [listingId], references: [id])
+  session Session?
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  bookingId   String   @unique
+  hoursLogged Float
+  notes       String?
+  completedAt DateTime @default(now())
+
+  booking Booking  @relation(fields: [bookingId], references: [id])
+  reviews Review[]
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  sessionId  String
+  reviewerId String
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  session  Session @relation(fields: [sessionId], references: [id])
+  reviewer User    @relation(fields: [reviewerId], references: [id])
+}

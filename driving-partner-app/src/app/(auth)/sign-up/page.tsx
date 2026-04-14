@@ -136,7 +136,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       }
 
       if (response.ok) {
-        alert("success");
         router.push('/dashboard');
       }
 

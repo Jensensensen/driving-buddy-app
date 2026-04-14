@@ -18,6 +18,7 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from '../../components/ForgotPassword';
 import AppTheme from '../../components/AppTheme';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../../components/CustomIcons';
+import { useRouter } from 'next/navigation'
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -62,11 +63,13 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
+  const router = useRouter()
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [authError, setAuthError] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,17 +79,40 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const isValid = validateInputs()
+    if (!isValid) return
+
+    const data = new FormData(event.currentTarget)
+
+    try {
+      const response = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.get('email'),
+          password: data.get('password'),
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setAuthError(result.error);
+        return;
+      }
+
+      if (response.ok) {
+        setAuthError('');
+        router.push('/dashboard');
+      }
+
+    } catch (error) {
+      console.error('Something went wrong:', error);
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  }
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -173,6 +199,15 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
+            {authError && (
+              <Typography
+                color="error"
+                fontSize="0.875rem"
+                textAlign="center"
+              >
+                {authError}
+              </Typography>
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -182,7 +217,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign in
             </Button>

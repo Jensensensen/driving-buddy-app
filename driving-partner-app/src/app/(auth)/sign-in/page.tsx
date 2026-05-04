@@ -146,7 +146,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
-          <SitemarkIcon />
+          DrivePass
           <Typography
             component="h1"
             variant="h4"

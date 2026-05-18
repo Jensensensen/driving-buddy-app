@@ -18,6 +18,7 @@ import { styled } from '@mui/material/styles';
 import AppTheme from '../../components/AppTheme';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../../components/CustomIcons';
 import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth-client'
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -69,6 +70,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [authError, setAuthError] = React.useState('');
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -107,42 +109,28 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     return isValid;
   };
 
+  // inside your component, replace handleSubmit with:
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const isValid = validateInputs();
+    const isValid = validateInputs()
     if (!isValid) return
 
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget)
 
-    try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.get('name'),
-          email: data.get('email'),
-          password: data.get('password'),
-          role: 'LEARNER',
-        })
-      });
+    const { error } = await authClient.signUp.email({
+      name: data.get('name') as string,
+      email: data.get('email') as string,
+      password: data.get('password') as string,
+    })
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        // Show error to user e.g. email already exists
-        console.error(result.error)
-        return
-      }
-
-      if (response.ok) {
-        router.push('/dashboard');
-      }
-
-    } catch (error) {
-      console.error('Something went wrong:', error);
+    if (error) {
+      setAuthError(error.message ?? 'Something went wrong.')
+      return
     }
-  };
+
+    router.push('/dashboard')
+  }
 
   return (
     <AppTheme {...props}>
@@ -207,6 +195,15 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
+            {authError && (
+              <Typography color="error" fontSize="0.875rem" textAlign="center">
+                {authError}
+              </Typography>
+            )}
+
+            <Button type="submit" fullWidth variant="contained">
+              Sign up
+            </Button>
             <Button
               type="submit"
               fullWidth

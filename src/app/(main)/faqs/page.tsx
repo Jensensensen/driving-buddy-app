@@ -1,4 +1,4 @@
-export default function NewPartnersPage() {
+export default function FAQsPage() {
     return (
         <div style={{ padding: '2rem' }}>
             <h1>Frequently Asked Questions (FAQs)</h1>

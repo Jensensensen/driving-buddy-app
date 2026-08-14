@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import '../globals.css'
+import '@/app/globals.css'
 
 export default function Navbar() {
     return (
@@ -20,7 +20,7 @@ export default function Navbar() {
             <Link href="/" className="logo">DrivePass</Link>
             <Link href="/become-a-partner" className="nav-link">Become a Partner</Link>
             <Link href="/partners" className="nav-link">Browse Partners</Link>
-            <Link href="/FAQs" className="nav-link">FAQs</Link>
+            <Link href="/faqs" className="nav-link">FAQs</Link>
             <Link href="/sign-up" className="nav-link">Sign up</Link>
             <Link href="/sign-in" className="sign-in-btn">Sign in</Link>
         </nav>

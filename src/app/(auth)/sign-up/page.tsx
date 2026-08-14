@@ -15,8 +15,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import AppTheme from '../../components/AppTheme';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../../components/CustomIcons';
+import AppTheme from '@/theme/AppTheme';
+import { GoogleIcon, FacebookIcon, SitemarkIcon } from '@/components/icons/CustomIcons';
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
 
